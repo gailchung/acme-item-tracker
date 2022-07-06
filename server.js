@@ -35,6 +35,37 @@ app.get('/api/users', async(req, res, next)=> {
   }
 });
 
+app.delete('/api/things/:id', async(req, res, next)=> {
+  try {
+    const thing = await Thing.findByPk(req.params.id);
+    await thing.destroy();
+    res.sendStatus(204)
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+app.post('/api/users', async(req, res, next)=> {
+  try {
+    res.status(201).send(await User.create(req.body));
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+app.delete('/api/users/:id', async(req, res, next)=> {
+  try {
+    const user = await User.findByPk(req.params.id);
+    await user.destroy();
+    res.sendStatus(204)
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+
 
 const port = process.env.PORT || 3000;
 
